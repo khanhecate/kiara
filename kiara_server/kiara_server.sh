@@ -5,10 +5,13 @@ if [[ EUID -ne 0 ]]; then
 fi
 while true
 do
-echo "Welcome to kiara server , choose number menu below :"
-echo -n "1.add user for kiara
-2.remove user for kiara
-3.exit 
+clear
+echo "=====================================================|"
+echo "Welcome to kiara server , choose number menu below : |"
+echo "1.add user for kiara                                 |
+2.remove user for kiara                              |
+3.exit                                               |"
+echo -n "=====================================================|
 "
 read menu
 case $menu in
@@ -25,6 +28,11 @@ case $menu in
 	cat tmp/data > /etc/passwd
 	sed -i 's/[1-9]//g' tmp/tmp
 	cat tmp/tmp >> /etc/passwd
+	echo "add $user success !"
+	sleep 1
+	echo "$user status"
+	grep $user /etc/passwd
+	sleep 2
 		;;
 	2)echo "List of user :"
 	cat db/db.user
@@ -36,6 +44,8 @@ case $menu in
 	userdel $user
 	cat tmp/tmp > db/db.user
 	rm -r tmp/tmp
+	echo "user $user deleted success !"
+	sleep 2
 		;;
 	3)exit
 		;;
