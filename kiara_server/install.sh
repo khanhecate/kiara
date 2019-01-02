@@ -1,4 +1,8 @@
 #!/bin/bash
+if [[ EUID -ne 0 ]]; then
+	echo "please run as root!"
+	exit
+fi
 echo 'Installing Kiara Server ...'
 echo 'Creating Directory for Kiara server ...'
 mkdir /opt/kiara 
