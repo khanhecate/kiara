@@ -1,10 +1,30 @@
 #!/bin/bash
-sleep 7 &
-PID=$!
-i=1
-sp="/-\|"
-echo -n ' '
-while [ -d /proc/$PID ]
-do
-  printf "\b${sp:i++%${#sp}:1}"
-done
+#color
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+CLEAR="\033[0m"
+done="connecting ... [${GREEN}DONE${CLEAR}]"
+fail="connecting ... [${RED}FAIL${CLEAR}]"
+echo "collecting data for make connection to server ..."
+address=`cat db/db.address`
+port=`cat db/db.port`
+username=`cat db/db.user`
+key=`cat db/db.password`
+echo "c0nNeCtInG ..."
+timeout 10 sshpass -p$key scp -P$port $username@$address:/kiara/db/db.user session.txt
+exitstatus=$?
+if [[ $exitstatus = 0 ]]; then
+	echo -e "$done"
+else echo -e "$fail , exit ..." 
+	exit
+fi
+#verifikasi user
+echo "connected checking for username $username ..."
+if grep -q "(active) : $username" session.txt;then
+	rm session.txt
+	echo "username $username accept , socket connection success !"
+else echo "username $username is not actived , exit ...."
+	rm session.txt
+	exit
+fi
+echo "done"
