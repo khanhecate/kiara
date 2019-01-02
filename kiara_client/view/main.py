@@ -4,9 +4,9 @@ class main:
 	"""docstring for main"""
 	def __init__(self, master):
 
-		dicto = {
-		 1 : "RED",2 : "GREEN",3 : "PINK",4 : "BLACK",5 : "YELLOW",6 : "GRAY",7 : "BLUE"
-		}
+		#dicto = {
+		# 1 : "RED",2 : "GREEN",3 : "PINK",4 : "BLACK",5 : "YELLOW",6 : "GRAY",7 : "BLUE"
+		#}
 		
 		
 		
@@ -83,8 +83,8 @@ class main:
 		self.setting_kiara_menu ['menu'] = self.child_setting_kiara_menu
 
 		### CONTENT KIARA SETTING
-		def color():
-			grandchild_setting_kiara_menu.add_command(command=dicto[0])	
+		#def color():
+			#grandchild_setting_kiara_menu.add_command(command=dicto[0])	
 
 		self.grandchild_setting_kiara_menu.add_radiobutton(label="red")
 		self.grandchild_setting_kiara_menu.add_radiobutton(label="green")
