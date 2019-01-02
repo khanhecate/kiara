@@ -26,7 +26,7 @@ case $menu in
 	read user
 	useradd $user
 	passwd $user
-	echo "(active) : $user" >> /kiara/db/db.user 
+	echo "(active) : $user" >> db/db.user 
 	echo "grep \"$user\" /etc/passwd > tmp/tmp"  > tmp/dieshell.sh
 	./tmp/dieshell.sh
 	data=`cat tmp/tmp`
@@ -45,15 +45,15 @@ case $menu in
 	cat db/db.user
 	printf "Input name user : "
 	read user
-	touch /kiara/tmp/dieshell.sh
-	echo "sed -i 's/(nonactive) : $user/(active) : $user/g' /kiara/db/db.user" > /kiara/tmp/dieshell.sh
+	touch tmp/dieshell.sh
+	echo "sed -i 's/(nonactive) : $user/(active) : $user/g' db/db.user" > tmp/dieshell.sh
 	chmod 777 tmp/dieshell.sh
 	cd tmp
 	./dieshell.sh
 	cd ..
 	echo "user $user activating success !"
 	echo "$user status"
-	grep $user /kiara/db/db.user
+	grep $user db/db.user
 
 	
 	sleep 2
@@ -62,22 +62,22 @@ case $menu in
 	cat db/db.user
 	printf "Input name user : "
 	read user
-	touch /kiara/tmp/dieshell.sh 
-	echo "sed -i 's/(active) : $user/(nonactive) : $user/g' /kiara/db/db.user" > /kiara/tmp/dieshell.sh
+	touch tmp/dieshell.sh 
+	echo "sed -i 's/(active) : $user/(nonactive) : $user/g' db/db.user" > tmp/dieshell.sh
 	chmod 777 tmp/dieshell.sh
 	cd tmp
 	./dieshell.sh
 	cd ..
 	echo "user $user nonactive success !"
 	echo "$user status"
-	grep $user /kiara/db/db.user
+	grep $user db/db.user
 	
 	sleep 2
 		;;
 	4)while true
 	do
 	echo "_____________________________________________"
-	cat /kiara/db/db.user
+	cat db/db.user
 	echo "_____________________________________________"
 	printf "Back to menu ? [y/n] : "
 	read list
