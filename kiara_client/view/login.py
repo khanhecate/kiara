@@ -1,60 +1,48 @@
-import threading
-import paramiko
-import subprocess
 from tkinter import *
-from main import *
+#from tkinter import messagebox
 
-class tampilan_gui():
-	def tampilan():
-		## Judul
-		window = Tk( )
-		window.title("Kiara Project")
+class tampilan_gui:
+	def __init__(self, master):
+		bingkai = Frame(master, width=500, height=500, bd=1)
+		bingkai.pack()
 
-		## Info
-		tulis = StringVar( )
-		label = Label(window, textvariable=tulis, relief=RAISED) 
-		tulis.set("Login To Your Server \n Make sure Kiara running on your server") 
-		label.pack(side=TOP)
+		self.mbar = Frame(bingkai, relief= 'raised', bd=2 )
+		self.mbar.pack(fill = X)
 
-		#Isi Data seperti Username dan Password 
-		ip_address = Label(window, text="Ip Address") #.grid(column=2, row=2, sticky=W)
-		ip_address.pack(side=LEFT)
-		ip = Entry(window, bd=5)
-		ip.pack(side=LEFT)
+		bingkai_ip = Frame(bingkai, bd=2, relief=RIDGE)
 
-		port = Label(window, text="Port")
-		port.pack(side=LEFT)
+		Label(bingkai_ip, text="Ip address", bd=5).pack(side=LEFT,padx=5)
+		Entry(bingkai_ip, bd=5).pack(side=RIGHT, padx=5)
 
-		port_isi = Entry(window, bd=5, width=6)
-		port_isi.pack(side=LEFT)
+		bingkai_ip.pack(expand=1, fill= X, pady=10, padx=50)
 
-		username = Label(window, text="username")
-		username.pack(side=LEFT)
-		usr = Entry(window, bd=5)
-		usr.pack(side=LEFT)
+		bingkai_port = Frame(bingkai, bd=2, relief=RIDGE)
 
-		pasword = Label(window, text="Password")
-		pasword.pack(side=LEFT)
+		Label(bingkai_port, text="port", bd=5).pack(side=LEFT,padx=5)
+		Entry(bingkai_port, bd=5).pack(side=RIGHT, padx=5)
 
-		passwd = Entry(window, show="*",bd=5)
-		passwd.pack(side=LEFT)
+		bingkai_port.pack(expand=1, fill= X, pady=20, padx=50)
 
-		kiara = Label(window, text="Kiara Project Version 1.0")
-		kiara.pack(side=BOTTOM)
+		bingkai_usr = Frame(bingkai, bd=2, relief=RIDGE)
+
+		Label(bingkai_usr, text="Username", bd=5).pack(side=LEFT,padx=5)
+		Entry(bingkai_usr, bd=5).pack(side=RIGHT, padx=5)
+
+		bingkai_usr.pack(expand=1, fill= X, pady=10, padx=50)
+
+		bingkai_passwd = Frame(bingkai, bd=2, relief=GROOVE)
+
+		Label(bingkai_passwd, text="Password", bd=5).pack(side=LEFT,padx=5)
+		Entry(bingkai_passwd,show="*", bd=5).pack(side=RIGHT, padx=5)
+
+		bingkai_passwd.pack(expand=1, fill= X, pady=20, padx=50)
+
+		Ok = Button(bingkai, text="Connect", ).pack(side=TOP, padx=50)
+		exit = Button(bingkai, text="exit", fg="red").pack(side=TOP, padx=50)
+
+
 		
-		kiara_Button = Button(window, text="Connect", command=gui)
-		kiara_Button.pack()
-
-	def ssh_command(ip, usr, passwd):
-		client = paramiko.SSHClient()
-		client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-		client.connect(ip, username=usr, password=passwd)
-		ssh_session = client.get_transport().open_session()
-		if ssh_session.active:
-			print (ssh_session.recv(1024))
-		return
-
-		window.mainloop()
-	tampilan()	
-
-tampilan_gui()
+window = Tk()
+window.title("Kiara")
+tampil = tampilan_gui(window)
+window.mainloop()
