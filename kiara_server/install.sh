@@ -1,8 +1,4 @@
 #!/bin/bash
-if [[ EUID -ne 0 ]]; then
-	echo "please run as root!"
-	exit
-fi
 echo 'Installing Kiara Server ...'
 echo 'Creating Directory for Kiara server ...'
 mkdir /opt/kiara 
@@ -31,5 +27,14 @@ if [[ $status = 0 ]]; then
 	echo 'thanks for Installing kiara :D'
 else echo 'Updating Kiara ...'
 	cp -r -v kiara_server.sh tmp /opt/kiara
+fi
+#allow root login
+#for debian
+if grep -q "#PermitRootLogin prohibit-password" /etc/ssh/sshd_config;then
+	sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+fi
+#for ubuntu
+if grep -q "#PermitRootLogin prohibit-password without-password" /etc/ssh/sshd_config;then
+	sed -i 's/#PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 fi
 echo "done"
