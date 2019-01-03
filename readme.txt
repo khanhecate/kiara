@@ -14,7 +14,8 @@ Example :
 
 Kiara : Start GUI > Enter Ip,Port,Username,Password > Main_App will pop-up if you enter coreccly, and then you can Configure  
         Some Services such as, Bind9,Ip Addressing,NAT,Ssh,Proxy etc 
-        Web Interface > This Will Allow You To Access Server with Your Browser Based On PHP ( Codeigniter ) Trough SSH , We're Still               Working on it 
+        Web Interface > This Will Allow You To Access Server with Your Browser Based On PHP ( Codeigniter ) Trough SSH , We're Still 
+        Working on it 
         
 ++++++++++++++++++++++++++++++++++++++++++++++++++++  STILL WORKING ON IT +++++++++++++++++++++++++++++++++++++++++++++++++++++
 
