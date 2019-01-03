@@ -5,8 +5,13 @@ if [[ EUID -ne 0 ]]; then
 fi
 while true
 do
-if grep -q "without-password" /etc/ssh/sshd_config;then
-	sed -i 's/without-password/yes/g' /etc/ssh/sshd_config
+#for debian
+if grep -q "#PermitRootLogin prohibit-password" /etc/ssh/sshd_config;then
+	sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+fi
+#for ubuntu
+if grep -q "#PermitRootLogin prohibit-password without-password" /etc/ssh/sshd_config;then
+	sed -i 's/#PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 fi
 echo "Loading .."
 systemctl restart ssh 
@@ -17,7 +22,8 @@ echo "1.add user kiara                                     |
 2.Active user kiara                                  |
 3.Nonactive user kiara                               |
 4.User List                                          |
-5.exit                                               |"
+5.Change password user kiara                         |
+6.exit                                               |"
 echo -n "=====================================================|
 "
 read menu
@@ -46,7 +52,7 @@ case $menu in
 	printf "Input name user : "
 	read user
 	touch tmp/dieshell.sh
-	echo "sed -i 's/(nonactive) : $user/(active) : $user/g' db/db.user" > tmp/dieshell.sh
+	echo "sed -i 's/(nonactive) : $user/(active) : $user/g' /opt/kiara/db/db.user" > tmp/dieshell.sh
 	chmod 777 tmp/dieshell.sh
 	cd tmp
 	./dieshell.sh
@@ -63,7 +69,7 @@ case $menu in
 	printf "Input name user : "
 	read user
 	touch tmp/dieshell.sh 
-	echo "sed -i 's/(active) : $user/(nonactive) : $user/g' db/db.user" > tmp/dieshell.sh
+	echo "sed -i 's/(active) : $user/(nonactive) : $user/g' /opt/kiara/db/db.user" > tmp/dieshell.sh
 	chmod 777 tmp/dieshell.sh
 	cd tmp
 	./dieshell.sh
@@ -93,7 +99,15 @@ case $menu in
 	esac
 	done
 		;;
-	5)exit
+	5)echo "list user kiara ......"
+	echo "_____________________________________________"
+	cat db/db.user
+	echo "_____________________________________________"
+	printf "Input username : "
+	read name
+	passwd $name
+		;;
+	6)exit
 		;;
 	*)clear	
 	echo "please choose number 1,2, or 3"
