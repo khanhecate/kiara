@@ -39,6 +39,6 @@ if grep -q "#PermitRootLogin prohibit-password" /etc/ssh/sshd_config;then
 fi
 echo "restarting ssh ..."
 if /etc/init.d/ssh restart 2>/dev/null ;then
-	echo "ssh restart failed ! , install error !"
-else echo "restart ssh success , install success ! "
+	echo "restart ssh success , install success ! "
+else echo "ssh restart failed ! , install error !"
 fi
