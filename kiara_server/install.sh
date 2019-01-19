@@ -1,11 +1,11 @@
 #!/bin/bash
 echo 'Installing Kiara Server ...'
 echo 'Creating Directory for Kiara server ...'
-mkdir /opt/kiara 
+mkdir /opt/kiara 2>/dev/null
 status=$?
 if [[ $status = 0 ]]; then
 	echo 'Copying file to Kiara folder ....'
-	cp -r -v db kiara_server.sh tmp /opt/kiara
+	cp -r -v db kiara_server.sh tmp config /opt/kiara
 	echo 'Adding Kiara to /usr/bin ...'
 	echo 'Moving to Directory /opt/kiara ...'
 	cd /opt/kiara
@@ -26,7 +26,7 @@ if [[ $status = 0 ]]; then
 	echo 'You can run kiara , by type "kiara" '
 	echo 'thanks for Installing kiara :D'
 else echo 'Updating Kiara ...'
-	cp -r -v kiara_server.sh tmp /opt/kiara
+	cp -r -v kiara_server.sh tmp config /opt/kiara
 fi
 #allow root login
 #for debian
@@ -34,7 +34,11 @@ if grep -q "#PermitRootLogin prohibit-password" /etc/ssh/sshd_config;then
 	sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 fi
 #for ubuntu
-if grep -q "#PermitRootLogin prohibit-password without-password" /etc/ssh/sshd_config;then
-	sed -i 's/#PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+if grep -q "#PermitRootLogin prohibit-password" /etc/ssh/sshd_config;then
+	sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 fi
-echo "done"
+echo "restarting ssh ..."
+if /etc/init.d/ssh restart 2>/dev/null ;then
+	echo "ssh restart failed ! , install error !"
+else echo "restart ssh success , install success ! "
+fi
