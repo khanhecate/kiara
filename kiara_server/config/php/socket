@@ -1,0 +1,19 @@
+#!/bin/bash
+#INPUT DATA HERE
+USER='khan'
+PASSWORD='1'
+IPADDRESS='192.168.106.194'
+PORT='22'
+#Connect
+CONNNECT() {
+	sshpass	-p$PASSWORD ssh -p$PORT $USER@$IPADDRESS "$1"
+}
+
+#socket and run command from here
+socket() {
+	if [[ -z "$1" ]]; then
+	echo "parameter is empty"
+	exit
+	else CONNNECT $1
+	fi	
+}
